@@ -7,7 +7,7 @@
 
 import UIKit
 
-class FertilizanteViewController: UIViewController {
+class FertilizanteViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var nitrogenioTXT: UITextField!
     @IBOutlet weak var fosforoTXT: UITextField!
@@ -28,13 +28,29 @@ class FertilizanteViewController: UIViewController {
         daplbl.isHidden = true
         ulbl.isHidden = true
         moplbl.isHidden = true
-        
         resultView.isHidden = true
+        resultView.layer.borderWidth = 1
+        resultView.layer.borderColor = UIColor.white.cgColor
 
-                resultView.layer.borderWidth = 1
-                resultView.layer.borderColor = UIColor.white.cgColor
+        // Define self as the delegate for your UITextField
+        nitrogenioTXT.delegate = self
+        fosforoTXT.delegate = self
+        potassioTXT.delegate = self
+        quantidadeTXT.delegate = self
+        dapTXT.delegate = self
+        uTXT.delegate = self
+        mopTXT.delegate = self
+    }
+    
+    // Dismiss keyboard when touch outside of UITextField
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 
-        // Do any additional setup after loading the view.
+    // Dismiss keyboard when return/done key is pressed
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
     }
     @IBAction func btnCalcular(_ sender: Any) {
         guard let nitrogenio = nitrogenioTXT.text, !nitrogenio.isEmpty,

@@ -1,10 +1,3 @@
-//
-//  CalculoFert.swift
-//  NavigationTabEasy
-//
-//  Created by Enzo Manzo Carelli on 03/06/23.
-//
-
 import Foundation
 
 class CalculoFert {
@@ -12,37 +5,27 @@ class CalculoFert {
     var fosforo : Float!
     var potassio : Float!
     var quantidade : Float!
-    var DAP : Float!
-    var U : Float!
-    var MOP : Float!
     
+    // Construtor sem argumentos
+    init() {
+    }
     
+    // Calcula a quantidade necessária de DAP para o nitrogênio e fósforo necessário
     func resultadoDAP() -> Float {
-        DAP = nitrogenio + fosforo
-        return DAP
+        let nitro_needed = nitrogenio / 0.18
+        let fosf_needed = fosforo / 0.46
+        return (nitro_needed + fosf_needed) / 2.0
     }
-
+    
+    // Calcula a quantidade necessária de U para o nitrogênio necessário
     func resultadoU() -> Float {
-        U = (fosforo * 2) + potassio
-        return U
+        let nitro_from_dap = resultadoDAP() * 0.18
+        let nitro_needed = (nitrogenio - nitro_from_dap) / 0.46
+        return nitro_needed
     }
-
+    
+    // Calcula a quantidade necessária de MOP para o potássio necessário
     func resultadoMOP() -> Float {
-        MOP = (nitrogenio * 4) + (fosforo - potassio)
-        return MOP
-    }
-    
-    init(nitrogenio: Float!, fosforo: Float!, potassio: Float!, quantidade: Float!, DAP: Float!, U: Float!, MOP: Float!) {
-        self.nitrogenio = nitrogenio
-        self.fosforo = fosforo
-        self.potassio = potassio
-        self.quantidade = quantidade
-        self.DAP = DAP
-        self.U = U
-        self.MOP = MOP
-    }
-    
-    init(){
-        
+        return potassio / 0.60
     }
 }
